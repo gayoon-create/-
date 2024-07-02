@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>로그인 페이지</title>
+		<style>
+			main { width:fit-content; margin:0.5em auto; }
+			main>h1 { text-align:center; text-decoration:underline; color:green; }
+			div#container { border:1px solid black; width:fit-content; padding:0.5em; margin:0.5em auto; }
+			div#container div { margin:0.5em; }
+			#btn { text-align:center; }
+			label { display:inline-block; width:3em; text-align:right; padding-right:0.3em; }
+
+			
+			
+			
+		</style>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<script>
+			function ajax_login() {   
+				var id = $('#id').val();
+				var pwd = $('#pwd').val();
+		
+				var param = {};
+				param.id = id;
+				param.pwd = pwd;
+					
+				$.ajax({  //비동기 스크립트와 자바 머시기를 쓴거다. 동기식은 시간이 걸리는 작업의 경우 응답이 오기전까지 브라우저가 멈춤 브라우저가 죽음, 백버튼도 안돼고 링크도 안눌림 용어 어싱크로나이징 언싱크로나이징, 그리고 비동기 식은 클릭 했었던 그화면을 갱신함 즉 치워버림
+				url:'../login',
+				cache:false,
+				type:'post', 
+				data:param, 
+				
+				
+				//dataType:'text', 
+                dataType:'json', 
+				success: function(res) {
+                    if (res.ok) {
+                    	alert('로그인 성공')
+                        location.href = 'gugu.html';
+                    }else{alert('로그인 실패');
+                    }
+                },
+                error: function(xhr, status, err) {
+                    alert('에러: ' + err);
+                }
+            });
+        }
+			
+		</script>
+	</head>
+	<body>
+	
+		<main>
+
+		<h1>👩‍👩‍👦Sweet 홈</h1> <!-- 블록라인 요소다 --> 제이쿼리라면 $('#phone')  $제이쿼리 함수 #아이디 샐렉션 즉 아이디가 폰인 태그를 가르킨다. 이걸 태그 오브젝트라 한다. 태그한개한개는 브라우저에서 오브젝트화 해야한다고 국제에서 권고했다. 즉 해당 객체 주소이고 거기에 값을 가져오라고 하려면 .val을 붙인다.
+
+		<div>
+			<div id="container">
+			<form id="addForm">
+			<intpur type="hidden" name="cmd" value="add"> <!-- 이용자에겐 안보임 cmd 커멘드 약자로 써봄 명령 type 히든이라서 이용자는 안보이지만 서버로는 전달됨--> 
+			<div><label for="id">아이디</label><input type="text" name="id" id="id" value="smith"></div> <!-- 인풋 타입은 폼 안에 있어도 밖에도 있어도 되는데 이용자가 입력할수 있는 폼필드다. 입력 받은걸 벨류로 꺼낼 수 있다.  //라벨은 문자열이다 h1과 같이 문자열이다. 그러나 라벨에는 for는 속성이 있다 name은 서버에서 사용할 부를 이름이고 id는 제이쿼리등 프론트 엔드등에서 쓸수 있다. -->
+			<!-- 라벨이 있고 없고의 차이중 하나는 라벨이 없으면 그이름을 눌러도 인풋 박스가 안눌린다 즉 연결이 안되어있지만 for를 통해서 인푹박스의 id를 찾아서 연결해 준다. -->
+			<div><label for="pwd">암호</label><input type="password" name="pwd" id="pwd" value="pwsmith"></div>
+			<!--  여기서 paswword 타입은 점점점으로 가려서 보여주는 타입 -->
+			<div id =  "btn">
+			<button type = "button" onclick="ajax_login()">로그인</button>
+			<!-- 버튼의 버튼이란건 아무 기능이 없단거 함수 실행을 위한 기능이다 온클린에 실행될 함수를 써 넣는다.~~ 서브 미트라고 하면 폼을 제출한다는 뜻 즉 로그링능ㄹ 누르는 순간 폼이 서버로 가버린다. 리셋 서브밋 버튼 이렇게 3가지 속성이 있다 -->
+			<button type = "reset">취소</button>
+			</form>
+			</div>
+		</div>
+		</main>
+		
+
+	</body>
+</html>
